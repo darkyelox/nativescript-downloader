@@ -83,7 +83,8 @@ export class Downloader extends DownloaderBase {
       progress => {
         dispatch_async(main_queue, () => {
           const owner = ref.get();
-          if (task && task.state === NSURLSessionTaskState.Running) {
+          // FIXME: the state of the task is undefined (disabled for now) follow the issue in https://github.com/triniwiz/nativescript-downloader/issues/34
+          // if (task && task.state === NSURLSessionTaskState.Running) {
             const current = Math.floor(
               Math.round(progress.fractionCompleted * 100)
             );
@@ -130,7 +131,8 @@ export class Downloader extends DownloaderBase {
                 lastBytesWritten = currentBytes;
               }
             }
-          } else if (task.state === NSURLSessionTaskState.Suspended) {
+            // FIXME: the state of the task is undefined (disabled for now) follow the issue in https://github.com/triniwiz/nativescript-downloader/issues/34
+          /* } else if (task.state === NSURLSessionTaskState.Suspended) {
             const data = owner.downloadsData.get(id);
             if (data) {
               owner.downloadsData.set(
@@ -140,7 +142,7 @@ export class Downloader extends DownloaderBase {
                 })
               );
             }
-          }
+          } */
         });
       },
       (targetPath, response) => {
@@ -161,7 +163,8 @@ export class Downloader extends DownloaderBase {
         } else {
           if (
             task &&
-            task.state === NSURLSessionTaskState.Completed &&
+            // FIXME: the state of the task is undefined (disabled for now) follow the issue in https://github.com/triniwiz/nativescript-downloader/issues/34
+            // task.state === NSURLSessionTaskState.Completed &&
             !task.error
           ) {
             if (owner.downloadsData.has(id)) {
